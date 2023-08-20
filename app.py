@@ -17,26 +17,23 @@ llm = Llama(
 
 history = []
 
-pre_prompt = " The user and the AI are having a conversation : <|endoftext|> \n "
+system_message = """
+You are a helpful, respectful and honest assistant. Always answer as helpfully as possible, while being safe.  Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature.
+
+If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question, please don't share false information.
+"""
 
 
-def generate_text(input_text, history):
+def generate_text(message, history):
+    
+    input_prompt = f"[INST] <<SYS>>\n{system_message}\n<</SYS>>\n\n "
+    for interaction in history:
+        input_prompt = input_prompt + str(interaction[0]) + " [/INST] " + str(interaction[1]) + " </s><s> [INST] "
 
-    temp = ""
-    if history == []:
-        input_text_with_history = (
-            f"SYSTEM:{pre_prompt}"
-            + "\n"
-            + f"USER: {input_text} "
-            + "\n"
-            + " ASSISTANT:"
-        )
-    else:
-        input_text_with_history = f"{history[-1][1]}" + "\n"
-        input_text_with_history += f"USER: {input_text}" + "\n" + " ASSISTANT:"
+    input_prompt = input_prompt + str(message) + " [/INST] "
 
     output = llm(
-        input_text_with_history,
+        input_prompt,
         temperature=0.15,
         top_p=0.1,
         top_k=40, 
