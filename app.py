@@ -9,13 +9,11 @@ from huggingface_hub import hf_hub_download  # load from huggingfaces
 
 llm = Llama(
     model_path=hf_hub_download(
-        # repo_id="TheBloke/WizardLM-7B-uncensored-GGML",
         repo_id="TheBloke/Llama-2-7B-Chat-GGML",
-        # filename="WizardLM-7B-uncensored.ggmlv3.q4_0.bin",
         filename="llama-2-7b-chat.ggmlv3.q5_0.bin",
     ),
     n_ctx=2048,
-    n_gpu_layers=50
+    n_gpu_layers=500,
 )  # download model from hf/ n_ctx=2048 for high ccontext length
 
 history = []
