@@ -38,6 +38,10 @@ def generate_text(input_text, history):
 
     output = llm(
         input_text_with_history,
+        temperature=0.15,
+        top_p=0.1,
+        top_k=40, 
+        repeat_penalty=1.1,
         max_tokens=1024,
         stop=[
             "<|prompter|>",
