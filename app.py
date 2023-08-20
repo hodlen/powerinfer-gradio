@@ -54,7 +54,7 @@ def generate_text(message, history):
         temp += stream["choices"][0]["text"]
         yield temp
 
-    history = ["init", input_text_with_history]
+    history = ["init", input_prompt]
 
 
 demo = gr.ChatInterface(
