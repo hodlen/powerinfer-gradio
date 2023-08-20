@@ -1,10 +1,9 @@
 import gradio as gr
 import copy
 import time
-import ctypes  # to run on C api directly
 import llama_cpp
 from llama_cpp import Llama
-from huggingface_hub import hf_hub_download  # load from huggingfaces
+from huggingface_hub import hf_hub_download  
 
 
 llm = Llama(
@@ -13,8 +12,8 @@ llm = Llama(
         filename="llama-2-7b-chat.ggmlv3.q5_0.bin",
     ),
     n_ctx=2048,
-    n_gpu_layers=500,
-)  # download model from hf/ n_ctx=2048 for high ccontext length
+    n_gpu_layers=500, # change n_gpu_layers if you have more or less VRAM 
+) 
 
 history = []
 
@@ -64,7 +63,7 @@ def generate_text(input_text, history):
 demo = gr.ChatInterface(
     generate_text,
     title="llama-cpp-python on GPU",
-    description="Running LLM with https://github.com/abetlen/llama-cpp-python. btw the text streaming thing was the hardest thing to impliment",
+    description="Running LLM with https://github.com/abetlen/llama-cpp-python",
     examples=["Hello", "Am I cool?", "Are tomatoes vegetables?"],
     cache_examples=True,
     retry_btn=None,
