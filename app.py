@@ -25,7 +25,7 @@ If a question does not make any sense, or is not factually coherent, explain why
 
 
 def generate_text(message, history):
-    
+    temp = ""
     input_prompt = f"[INST] <<SYS>>\n{system_message}\n<</SYS>>\n\n "
     for interaction in history:
         input_prompt = input_prompt + str(interaction[0]) + " [/INST] " + str(interaction[1]) + " </s><s> [INST] "
