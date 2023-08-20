@@ -12,7 +12,7 @@ llm = Llama(
         filename="llama-2-7b-chat.ggmlv3.q5_0.bin",
     ),
     n_ctx=2048,
-    n_gpu_layers=1500, # change n_gpu_layers if you have more or less VRAM 
+    n_gpu_layers=5000, # change n_gpu_layers if you have more or less VRAM 
 ) 
 
 history = []
@@ -61,6 +61,8 @@ demo = gr.ChatInterface(
     generate_text,
     title="llama-cpp-python on GPU",
     description="Running LLM with https://github.com/abetlen/llama-cpp-python",
+    examples=["tell me everything about llamas"],
+    cache_examples=True,
     retry_btn=None,
     undo_btn="Delete Previous",
     clear_btn="Clear",
