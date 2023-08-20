@@ -13,6 +13,7 @@ llm = Llama(
         filename="WizardLM-7B-uncensored.ggmlv3.q4_0.bin",
     ),
     n_ctx=2048,
+    n_gpu_layers=30
 )  # download model from hf/ n_ctx=2048 for high ccontext length
 
 history = []
