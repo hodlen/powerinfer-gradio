@@ -61,8 +61,6 @@ demo = gr.ChatInterface(
     generate_text,
     title="llama-cpp-python on GPU",
     description="Running LLM with https://github.com/abetlen/llama-cpp-python",
-    examples=["Hello", "Am I cool?", "Are tomatoes vegetables?"],
-    cache_examples=True,
     retry_btn=None,
     undo_btn="Delete Previous",
     clear_btn="Clear",
