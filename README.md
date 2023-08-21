@@ -1,6 +1,6 @@
 ---
 title: Llama Cpp Python Cuda
-emoji: 🏆
+emoji: 🦙
 colorFrom: pink
 colorTo: indigo
 sdk: docker
