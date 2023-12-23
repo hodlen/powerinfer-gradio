@@ -4,56 +4,58 @@ import copy
 import time
 import llama_cpp
 from llama_cpp import Llama
-from huggingface_hub import hf_hub_download  
+from huggingface_hub import hf_hub_download
 
 
 llm = Llama(
-    model_path=hf_hub_download(
-        repo_id=os.environ.get("REPO_ID", "TheBloke/Llama-2-7b-Chat-GGUF"),
-        filename=os.environ.get("MODEL_FILE", "llama-2-7b-chat.Q5_0.gguf"),
-    ),
+    model_path=os.environ.get("MODEL_PATH"),
     n_ctx=2048,
-    n_gpu_layers=50, # change n_gpu_layers if you have more or less VRAM 
-) 
+    n_batch=32,
+    n_threads=8,
+    verbose=True,
+)
 
 history = []
 
 system_message = """
 You are a helpful, respectful and honest assistant. Always answer as helpfully as possible, while being safe.  Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature.
-
 If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question, please don't share false information.
-"""
+""".strip()
 
 
 def generate_text(message, history):
-    temp = ""
-    input_prompt = f"[INST] <<SYS>>\n{system_message}\n<</SYS>>\n\n "
-    for interaction in history:
-        input_prompt = input_prompt + str(interaction[0]) + " [/INST] " + str(interaction[1]) + " </s><s> [INST] "
+    input_prompt = "" # f"System: {system_message}\n"
+    for user_msg, assistant_msg in history:
+        input_prompt += f"User: {user_msg}\n"
+        input_prompt += f"Assistant: {assistant_msg}\n"
 
-    input_prompt = input_prompt + str(message) + " [/INST] "
+    input_prompt += f"User: {message}\n"
+    input_prompt += f"Assistant: "
+
+    print('input_prompt:\n' + input_prompt)
 
     output = llm(
         input_prompt,
         temperature=0.15,
         top_p=0.1,
-        top_k=40, 
+        top_k=40,
         repeat_penalty=1.1,
-        max_tokens=1024,
+        max_tokens=512,
         stop=[
-            "<|prompter|>",
             "<|endoftext|>",
-            "<|endoftext|> \n",
-            "ASSISTANT:",
-            "USER:",
-            "SYSTEM:",
+            "Assistant: ",
+            "User: ",
+            "System: ",
         ],
         stream=True,
     )
+    temp = ""
     for out in output:
         stream = copy.deepcopy(out)
         temp += stream["choices"][0]["text"]
         yield temp
+
+    print('response: ', temp)
 
     history = ["init", input_prompt]
 
@@ -67,6 +69,7 @@ demo = gr.ChatInterface(
     retry_btn=None,
     undo_btn="Delete Previous",
     clear_btn="Clear",
+    concurrency_limit=4,
 )
-demo.queue(concurrency_count=1, max_size=5)
+demo.queue(max_size=20)
 demo.launch()
