@@ -9,8 +9,10 @@ from huggingface_hub import hf_hub_download
 
 llm = Llama(
     model_path=os.environ.get("MODEL_PATH"),
-    n_ctx=2048,
-    n_batch=32,
+    idx_path=os.environ.get("IDX_PATH"),
+    n_gpu_layers=63,
+    n_ctx=512,
+    n_batch=1,
     n_threads=8,
     verbose=True,
 )
