@@ -57,7 +57,6 @@ def generate_text(message, history):
 
     print('response: ', temp)
 
-    history = ["init", input_prompt]
 
 
 demo = gr.ChatInterface(
@@ -65,11 +64,11 @@ demo = gr.ChatInterface(
     title="PowerInfer with Falcon-40B(ReLU) on 4090",
     description="Running LLM with <a href=https://github.com/SJTU-IPADS/PowerInfer>PowerInfer</a> on Consumer-grade GPUs",
     examples=["Tell me a story about the middle earth", "Tell a fairy tale about PowerInfer"],
-    cache_examples=True,
+    cache_examples=False,
     retry_btn=None,
     undo_btn="Delete Previous",
     clear_btn="Clear",
     concurrency_limit=4,
 )
 demo.queue(max_size=20)
-demo.launch(share=True)
+demo.launch(share=False)
