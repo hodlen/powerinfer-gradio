@@ -62,8 +62,8 @@ def generate_text(message, history):
 
 demo = gr.ChatInterface(
     generate_text,
-    title="PowerInfer with Falcon-40B(ReLU) on 4090",
-    description="Running LLM with <a href=https://github.com/SJTU-IPADS/PowerInfer>PowerInfer</a> on Consumer-grade GPUs",
+    title="<a href=https://github.com/SJTU-IPADS/PowerInfer>PowerInfer</a> with <a href=https://huggingface.co/SparseLLM/ReluFalcon-40B>Falcon-40B(ReLU)-FP16</a> on single 4090",
+    description="Paper: <a href=https://arxiv.org/abs/2312.12456>PowerInfer: Fast Large Language Model Serving with a Consumer-grade GPU</a>",
     examples=["Tell me a story about the middle earth", "Tell a fairy tale about PowerInfer"],
     cache_examples=False,
     retry_btn=None,
