@@ -62,9 +62,9 @@ def generate_text(message, history):
 
 demo = gr.ChatInterface(
     generate_text,
-    title="llama-cpp-python on GPU",
-    description="Running LLM with https://github.com/abetlen/llama-cpp-python",
-    examples=["tell me everything about llamas"],
+    title="PowerInfer with Falcon-40B(ReLU) on 4090",
+    description="Running LLM with <a href=https://github.com/SJTU-IPADS/PowerInfer>PowerInfer</a> on Consumer-grade GPUs",
+    examples=["Tell me a story about the middle earth", "Tell a fairy tale about PowerInfer"],
     cache_examples=True,
     retry_btn=None,
     undo_btn="Delete Previous",
@@ -72,4 +72,4 @@ demo = gr.ChatInterface(
     concurrency_limit=4,
 )
 demo.queue(max_size=20)
-demo.launch()
+demo.launch(share=True)
