@@ -6,10 +6,9 @@ import llama_cpp
 from llama_cpp import Llama
 from huggingface_hub import hf_hub_download
 
-
 llm = Llama(
     model_path=os.environ.get("MODEL_PATH"),
-    idx_path=os.environ.get("IDX_PATH"),
+    path_idx=os.environ.get("IDX_PATH"),
     n_gpu_layers=63,
     n_ctx=512,
     n_batch=1,
