@@ -22,7 +22,7 @@ RUN python3 -m pip install --upgrade pip pytest cmake \
 
 COPY . .
 
-RUN CMAKE_ARGS="-DLLAMA_CUBLAS=on" python3 -m pip install git+https://github.com/hodlen/llama-cpp-python.git@main --force-reinstall
+RUN CMAKE_ARGS="-DLLAMA_CUBLAS=on" python3 -m pip install git+https://github.com/hodlen/llama-cpp-python.git@perf --force-reinstall
 
 RUN useradd -m -u 1000 user
 # Switch to the "user" user
